@@ -1,4 +1,4 @@
 package ex3;
 
-public class ComputerPlayer {
+public class ComputerPlayer implements IPlayer{
 }
