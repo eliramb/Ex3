@@ -1,6 +1,10 @@
 package ex3;
 
 public class EasyLevel implements IGameLevel{
+    @Override
+    public Position ComputerChoise() {
+        return null;
+    }
     // returns a column number within 0...COLUMNS, -1 if board is full
     /*public static int computerChoice(Position position) {
         int emptyrow= 0;

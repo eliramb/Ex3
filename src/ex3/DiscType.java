@@ -1,6 +1,9 @@
 package ex3;
 
+
 public class DiscType {
-    private char type;
-    public char getType(){return type;}
+    //private JColorChooser colorChooser;
+    public DiscType(char _letter){
+        // X or 0
+    }
 }
