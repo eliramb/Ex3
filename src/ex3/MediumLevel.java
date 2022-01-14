@@ -2,7 +2,7 @@ package ex3;
 
 public class MediumLevel implements IGameLevel {
     @Override
-    public Position ComputerChoise() {
-        return null;
+    public int ComputerChoice(Position position, Board board) {
+        return 0;
     }
 }

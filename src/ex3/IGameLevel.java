@@ -1,5 +1,5 @@
 package ex3;
 
 public interface IGameLevel {
-    Position ComputerChoise();
+    public int ComputerChoice(Position position, Board board);
 }
