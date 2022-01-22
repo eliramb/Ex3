@@ -1,5 +1,5 @@
 package ex3;
 
 public interface IGraphicalUI {
-    void UpdateView(Game game);
+    public void updateView(Game game);
 }

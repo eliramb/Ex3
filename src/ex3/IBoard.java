@@ -1,5 +1,5 @@
 package ex3;
 
 public interface IBoard {
-    void DecorateBoard();
+    public void DecorateBoard();
 }

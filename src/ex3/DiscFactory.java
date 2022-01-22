@@ -1,9 +1,12 @@
 package ex3;
 
-public class DiscFactory {
-    public DiscType[] discTypes;
+import java.awt.*;
+import java.sql.Array;
 
-    public DiscType GetDiscType(char letter, String color) {
-        return null;
-    }
+public class DiscFactory {
+    public static DiscType[] discTypeArray;
+
+/*    public static DiscType getDiscType(char type, Color color) {
+
+    }*/
 }

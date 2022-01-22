@@ -1,14 +1,14 @@
 package ex3;
 
 public class Position {
-    int ROWS = 6;
-    int COLUMNS = 7;
+    int col;
+    int row;
 
-    public int getROWS() {
-        return ROWS;
+    public int getCol() {
+        return col;
     }
 
-    public int getCOLUMNS() {
-        return COLUMNS;
+    public int getRow() {
+        return row;
     }
 }

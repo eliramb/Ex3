@@ -1,7 +1,8 @@
 package ex3;
 
 public class GameManager {
-    public IGraphicalUI graphicalUI;
+    public IGraphicalUI graphicalUI[];
+
     public void subscribe(IGraphicalUI graphicalUI){
 
     }

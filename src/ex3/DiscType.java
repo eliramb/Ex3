@@ -1,16 +1,21 @@
 package ex3;
 
 
+import java.awt.*;
+
 public class DiscType {
-    private char discType;
-    //private JColorChooser colorChooser;
-    public DiscType(char type){
-        this.discType = type;
+    public char type;
+    public Color color;
+
+    public DiscType(char type){//, Color color) {
+        this.type = type;
+        //this.color = color;
     }
-
-    public char getDiskType(){
-        return discType;
+    public char getType(){
+        return type;
     }
-
-
+    public Color getColor(){
+        return color;
+    }
+    public void draw(Position position, char type, Color color){}
 }

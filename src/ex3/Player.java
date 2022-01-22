@@ -1,14 +1,13 @@
 package ex3;
 
-public class Player implements IPlayer{
-    public DiscType disc;
-    public Board board;
+public class Player extends AbstractPlayer {
 
-    public Player(){
-
-    }
     @Override
-    public void AlignDisc(Position position) {
+    public Position alignDisc(Position position) {
+        //board.alignDisc(position);
+        return position;
 
     }
+
+
 }

@@ -1,20 +1,49 @@
 package ex3;
 
 public class Board implements IBoard {
+
+    int ROWS;
+    int COLUMNS;
+    int WIN;
     public Disc[] Discs;
     public char[][] board;
-    Position position;
-    int WIN;
+
+    public Board(){
+        int ROWS = 6;
+        int COLUMNS = 7;
+        int WIN = 4;
+        board =new char[ROWS][COLUMNS];
+    }
+
     @Override
     public void DecorateBoard() {
     }
 
-    public void AlignDisc(Position pos, Disc disc){
+    public void initializeBoard() {
+        for (int i = 0; i < ROWS; i++)
+            for (int j = 0; j < COLUMNS; j++)
+                board[i][j] = ' ';//לשנות ל empty
+    }
+    public void AlignDisc(Disc disc){
 
+    }
+    public void printBoard() {
+        System.out.println("Printing board:");
+        System.out.println();
+        for (int j = 0; j < ROWS; j++) {
+            System.out.print("|");
+            for (int k = 0; k < COLUMNS; k++)
+                System.out.print(board[j][k] + "|");
+            System.out.println();
+        }
+        for (int k = 0; k < 2* COLUMNS+1; k++)
+            System.out.print("-");
+        System.out.println();
+        System.out.println();
     }
 
     public boolean isColumnFull(int col){
-        for (int i = 0; i < position.getROWS(); i++) {
+        for (int i = 0; i < ROWS; i++) {
             if (board[i][col] == ' ')//EMPTY)
                 return false;
         }
@@ -22,7 +51,7 @@ public class Board implements IBoard {
     }
     public int firstEmptyRow(int col)
     {
-        for (int i = position.getCOLUMNS()-1; i >=0; i--) {
+        for (int i = ROWS-1; i >=0; i--) {
             if (board[i][col] == ' ')return i;//EMPTY) return i;
         }
         return -1;
@@ -50,7 +79,7 @@ public class Board implements IBoard {
 
         count = 1;
         // vertical down
-        for (int i=row+1; i < position.getROWS(); i++) {
+        for (int i=row+1; i < ROWS; i++) {
             if (board[i][col]==c)
                 count++;
             else break;
@@ -70,7 +99,7 @@ public class Board implements IBoard {
         // up
         int kol = col+1;
         for (int i=row-1; i >= 0; i--) {
-            if (kol>=position.getCOLUMNS()) break; // we reached the end of the board right side
+            if (kol>=COLUMNS) break; // we reached the end of the board right side
             if (board[i][kol]==c)
                 count++;
             else
@@ -80,7 +109,7 @@ public class Board implements IBoard {
         if (count >= WIN) return true;
         // keep counting down
         kol = col-1;
-        for (int i=row+1; i < position.getROWS(); i++) {
+        for (int i=row+1; i < ROWS; i++) {
             if (kol<0) break; // we reached the end of the board left side
             if (board[i][kol]==c)
                 count++;
@@ -105,8 +134,8 @@ public class Board implements IBoard {
         if (count >= WIN) return true; // won diagonal "\"
         // keep counting down
         kol = col+1;
-        for (int i=row+1; i < position.getROWS(); i++) {
-            if (kol>= position.getCOLUMNS()) break; // we reached the end of the board right side
+        for (int i=row+1; i < ROWS; i++) {
+            if (kol>= COLUMNS) break; // we reached the end of the board right side
             if (board[i][kol]==c)
                 count++;
             else
@@ -117,29 +146,15 @@ public class Board implements IBoard {
 
         return false;
         }
-    public void setDisc(int row, int col, char disc)
+    public void alignDisc(int row, int col, char disc)
     {
         board[row][col] = disc;
     }
     public boolean boardIsFull() {
         // it's enough to check top row
-        for (int i=0; i<position.getCOLUMNS(); i++)
+        for (int i=0; i<COLUMNS; i++)
             if (board[0][i]== ' ') return false;//EMPTY) return false;
         return true;
     }
 
-    public void printBoard() {
-        System.out.println("Printing board:");
-        System.out.println();
-        for (int j = 0; j < position.getROWS(); j++) {
-            System.out.print("|");
-            for (int k = 0; k < position.getCOLUMNS(); k++)
-                System.out.print(board[j][k] + "|");
-            System.out.println();
-        }
-        for (int k = 0; k < 2* position.getCOLUMNS()+1; k++)
-            System.out.print("-");
-        System.out.println();
-        System.out.println();
-    }
 }
