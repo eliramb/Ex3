@@ -1,28 +1,27 @@
 package ex3;
 
 public class EasyLevel implements IGameLevel{
-    private char XPLAYER = 'X';
-    private char OPLAYER = 'O';
-    private char EMPTY = ' ';
+    private final DiscType XPLAYER = new DiscType('X');
+    private final DiscType OPLAYER = new DiscType('O');
+    private final DiscType EMPTY = new DiscType(' ');
 
     @Override
     public Position ComputerChoice(Board board) {
     // returns a column number within 0...COLUMNS, -1 if board is full
         int emptyrow= 0;
-        Position position=new Position();
+        Position position=null;
         // first check if a move can win
         for (int i=0; i<board.COLUMNS; i++) {
-            if (!board.isColumnFull(i)) {
+            if (board.isColumnFull(i)) {
                 emptyrow = board.firstEmptyRow(i);
-                board.alignDisc(emptyrow, i, XPLAYER);
-                if (board.winningDisk(emptyrow, i)) {
-                    board.alignDisc(emptyrow, i, EMPTY); // reset
-                    position.row = emptyrow;
-                    position.col = i;
-                    //return i;
+                position =new Position(emptyrow, i);
+                board.alignDisc(position, XPLAYER);
+                if (board.winningDisk(position)) {
+                    board.alignDisc(position, EMPTY); // reset
+
                     return position;
                 }
-                board.alignDisc(emptyrow, i, EMPTY); // reset
+                board.alignDisc(position, EMPTY); // reset
             }
         }
         // otherwise then pick up any move that will prevent other player to win
@@ -30,15 +29,16 @@ public class EasyLevel implements IGameLevel{
         int counter = 0; // i count other player possible winnings
         int chosenrow = 0;
         for (int i=0; i<board.COLUMNS; i++) {
-            if (!board.isColumnFull(i)) {
+            if (board.isColumnFull(i)) {
                 emptyrow = board.firstEmptyRow(i);
-                board.alignDisc(emptyrow, i, OPLAYER); // assume the other player does this
-                if (board.winningDisk(emptyrow, i)) {
-                    board.alignDisc(emptyrow, i, EMPTY); // reset
+                position = new Position(emptyrow,i);
+                board.alignDisc(position, OPLAYER); // assume the other player does this
+                if (board.winningDisk(position)) {
+                    board.alignDisc(position, EMPTY); // reset
                     counter++; // we found a winning disc
                     chosenrow = i; // remember the row
                 }
-                board.alignDisc(emptyrow, i, EMPTY); // reset
+                board.alignDisc(position, EMPTY); // reset
             }
         }
         // we block the player if there is exactly one winning disc
@@ -52,8 +52,9 @@ public class EasyLevel implements IGameLevel{
 
         // else if other player wins no matter what, pick up first non full column
         for (int i=0; i<board.COLUMNS; i++)
-            if (!board.isColumnFull(i)){
-                position.row = emptyrow;
+            if (board.isColumnFull(i)){
+                assert position != null;
+                position.row = -1;
                 position.col = i;
                 //return i;
                 return position;

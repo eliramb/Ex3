@@ -1,8 +1,17 @@
 package ex3;
 
 public class Position {
-    int col;
     int row;
+    int col;
+
+    public Position(int _row, int _col) {
+        row=_row;
+        col=_col;
+    }
+
+    public Position() {
+
+    }
 
     public int getCol() {
         return col;

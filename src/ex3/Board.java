@@ -2,17 +2,21 @@ package ex3;
 
 public class Board implements IBoard {
 
-    int ROWS;
-    int COLUMNS;
-    int WIN;
-    public Disc[] Discs;
-    public char[][] board;
+    public  int ROWS = 6;
+    public  int COLUMNS=7;
+    // how many discs to win
+    public  int WIN = 4;
+    // the discs
 
+    public  char EMPTY = ' ';
+
+    public Disc[] Discs;
+    public  char[][] board;
+
+    //Ctor
     public Board(){
-        int ROWS = 6;
-        int COLUMNS = 7;
-        int WIN = 4;
         board =new char[ROWS][COLUMNS];
+        initializeBoard();
     }
 
     @Override
@@ -22,7 +26,7 @@ public class Board implements IBoard {
     public void initializeBoard() {
         for (int i = 0; i < ROWS; i++)
             for (int j = 0; j < COLUMNS; j++)
-                board[i][j] = ' ';//לשנות ל empty
+                board[i][j] = EMPTY;
     }
     public void AlignDisc(Disc disc){
 
@@ -44,34 +48,37 @@ public class Board implements IBoard {
 
     public boolean isColumnFull(int col){
         for (int i = 0; i < ROWS; i++) {
-            if (board[i][col] == ' ')//EMPTY)
-                return false;
+            if (board[i][col] == EMPTY)
+                return true;
         }
-        return true;
+        return false;
     }
     public int firstEmptyRow(int col)
     {
         for (int i = ROWS-1; i >=0; i--) {
-            if (board[i][col] == ' ')return i;//EMPTY) return i;
+            if (board[i][col] == EMPTY) return i;
         }
         return -1;
     }
     // is the disc at board[rowIndex][colIndex] winning?
-    public boolean winningDisk(int row, int col)
+    public boolean winningDisk(Position position)
     {
-        char c = board[row][col];
+        int rowIndex = position.row;
+        int colIndex = position.col;
+
+        char c = board[rowIndex][colIndex];
         int count = 1;
 
         // horizontal right
-        for (int i=col+1; i < col; i++) {
-            if (board[row][i]==c)
+        for (int i=colIndex+1; i < COLUMNS; i++) {
+            if (board[rowIndex][i]==c)
                 count++;
             else break;
         }
         if (count >= WIN) return true; // won horizontally
         // keep counting horizontal left
-        for (int i=col-1; i >=0; i--) {
-            if (board[row][i]==c)
+        for (int i=colIndex-1; i >=0; i--) {
+            if (board[rowIndex][i]==c)
                 count++;
             else break;
         }
@@ -79,15 +86,15 @@ public class Board implements IBoard {
 
         count = 1;
         // vertical down
-        for (int i=row+1; i < ROWS; i++) {
-            if (board[i][col]==c)
+        for (int i=rowIndex+1; i < ROWS; i++) {
+            if (board[i][colIndex]==c)
                 count++;
             else break;
         }
         if (count >= WIN) return true; // won vertical
         // keep counting vertical up
-        for (int i=row-1; i >=0; i--) {
-            if (board[i][col]==c)
+        for (int i=rowIndex-1; i >=0; i--) {
+            if (board[i][colIndex]==c)
                 count++;
             else
                 break;
@@ -97,8 +104,8 @@ public class Board implements IBoard {
         // first diagonal:  /
         count = 1;
         // up
-        int kol = col+1;
-        for (int i=row-1; i >= 0; i--) {
+        int kol = colIndex+1;
+        for (int i=rowIndex-1; i >= 0; i--) {
             if (kol>=COLUMNS) break; // we reached the end of the board right side
             if (board[i][kol]==c)
                 count++;
@@ -108,8 +115,8 @@ public class Board implements IBoard {
         }
         if (count >= WIN) return true;
         // keep counting down
-        kol = col-1;
-        for (int i=row+1; i < ROWS; i++) {
+        kol = colIndex-1;
+        for (int i=rowIndex+1; i < ROWS; i++) {
             if (kol<0) break; // we reached the end of the board left side
             if (board[i][kol]==c)
                 count++;
@@ -122,8 +129,8 @@ public class Board implements IBoard {
         // second diagonal : \
         count = 1;
         // up
-        kol = col-1;
-        for (int i=row-1; i >= 0; i--) {
+        kol = colIndex-1;
+        for (int i=rowIndex-1; i >= 0; i--) {
             if (kol<0) break; // we reached the end of the board left side
             if (board[i][kol]==c)
                 count++;
@@ -133,28 +140,26 @@ public class Board implements IBoard {
         }
         if (count >= WIN) return true; // won diagonal "\"
         // keep counting down
-        kol = col+1;
-        for (int i=row+1; i < ROWS; i++) {
-            if (kol>= COLUMNS) break; // we reached the end of the board right side
+        kol = colIndex+1;
+        for (int i=rowIndex+1; i < ROWS; i++) {
+            if (kol>=COLUMNS) break; // we reached the end of the board right side
             if (board[i][kol]==c)
                 count++;
             else
                 break;
             kol++;
         }
-        if (count >= WIN) return true; // won diagonal "\"
+        return count >= WIN; // won diagonal "\"
+    }
 
-        return false;
-        }
-    public void alignDisc(int row, int col, char disc)
+    public void alignDisc(Position position, DiscType discType)
     {
-        board[row][col] = disc;
+        board[position.row][position.col] = discType.type;
     }
     public boolean boardIsFull() {
         // it's enough to check top row
         for (int i=0; i<COLUMNS; i++)
-            if (board[0][i]== ' ') return false;//EMPTY) return false;
+            if (board[0][i]== EMPTY) return false;
         return true;
     }
-
 }
