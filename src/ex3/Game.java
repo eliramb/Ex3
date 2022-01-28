@@ -23,11 +23,12 @@ public class Game {
     public GameManager gameManager;
 
     public Vector<Menu> gameMenu;
-
+    private final Scanner terminalInput ;
     public Game() {
         InitGameMenu();
         Players = new Vector<>();
         gameManager = new GameManager();
+        terminalInput = new Scanner(System.in);
     }
 
     //init the game menu
@@ -45,6 +46,64 @@ public class Game {
         AddMenu(m1);
         AddMenu(m2);
         AddMenu(m3);
+    }
+
+    public static boolean isInteger(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+    private int getChoice() {
+        int choice=1;
+        boolean badchoice;
+        do {
+            //PrintMenu();
+            String sChoice = terminalInput.nextLine();
+            if(isInteger(sChoice)) {
+                choice = Integer.parseInt(sChoice);
+                badchoice = choice < 0 || choice > 2;
+            }
+            else{
+                badchoice=true;
+            }
+            if (badchoice) System.out.println("Input incorrect! Please try again.");
+
+        }while(badchoice);
+        return choice;
+    }
+
+    public int UserChoice() {
+        int choice = getChoice();
+
+        if(choice==0){
+            System.out.println("Bye bye!!!");
+            terminalInput.close();
+            return 0;
+        }
+
+        Board board = new Board();
+        board.printBoard();
+
+        Player player1 = new Player(OPLAYER,board);//first human player
+        Players.add(player1);
+        currentPlayer = player1;
+
+        IPlayer player2=null;
+        if(choice==1){
+            player2 = new Player(XPLAYER,board);//Second human player
+        }
+        if(choice==2){
+            player2 =new ComputerPlayer(XPLAYER, board);
+            computerplays = true;
+        }
+        Players.add(player2);
+        return choice;
     }
 
     public void AddMenu(Menu menu){
@@ -80,7 +139,8 @@ public class Game {
         if (asbPlayer.discType.type==XPLAYER) return 2; else return 1;
     }
 
-    public void Play(Scanner terminalInput) {
+    public void Play( ) {
+        if(currentPlayer == null) return;
         Board board=((AbstractPlayer)currentPlayer).board;
         System.out.println("Starting a game of 'Four in a Line'.");
         do {
