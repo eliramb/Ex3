@@ -9,10 +9,6 @@ public class Position {
         col=_col;
     }
 
-    public Position() {
-
-    }
-
     public int getCol() {
         return col;
     }

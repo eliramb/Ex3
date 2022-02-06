@@ -28,9 +28,7 @@ public class Board implements IBoard {
             for (int j = 0; j < COLUMNS; j++)
                 board[i][j] = EMPTY;
     }
-    public void AlignDisc(Disc disc){
 
-    }
     public void printBoard() {
         System.out.println("Printing board:");
         System.out.println();
@@ -156,6 +154,7 @@ public class Board implements IBoard {
     {
         board[position.row][position.col] = discType.type;
     }
+
     public boolean boardIsFull() {
         // it's enough to check top row
         for (int i=0; i<COLUMNS; i++)

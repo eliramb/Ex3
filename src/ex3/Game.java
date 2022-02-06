@@ -10,7 +10,6 @@ public class Game {
 
     public static char XPLAYER = 'X';
     public static char OPLAYER = 'O';
-    public static char EMPTY = ' ';
 
     public boolean gameover = false;
     public boolean computerplays;
@@ -31,6 +30,10 @@ public class Game {
         terminalInput = new Scanner(System.in);
     }
 
+    public void AddMenu(Menu menu){
+        gameMenu.add(menu);
+    }
+
     //init the game menu
     private void InitGameMenu() {
         String quit ="0. Exit";
@@ -48,7 +51,7 @@ public class Game {
         AddMenu(m3);
     }
 
-    public static boolean isInteger(String strNum) {
+    public boolean isInteger(String strNum) {
         if (strNum == null) {
             return false;
         }
@@ -59,11 +62,11 @@ public class Game {
         }
         return true;
     }
+
     private int getChoice() {
         int choice=1;
         boolean badchoice;
         do {
-            //PrintMenu();
             String sChoice = terminalInput.nextLine();
             if(isInteger(sChoice)) {
                 choice = Integer.parseInt(sChoice);
@@ -106,10 +109,6 @@ public class Game {
         return choice;
     }
 
-    public void AddMenu(Menu menu){
-        gameMenu.add(menu);
-    }
-
     //print the menu
     public void PrintMenu(){
         for (Menu menu : gameMenu) {
@@ -119,7 +118,7 @@ public class Game {
     }
 
     //add Player
-    public void AddPlayer(IPlayer player ){
+    public void AddPlayer(IPlayer player){
         Players.add(player);
     }
 
@@ -129,7 +128,6 @@ public class Game {
             return p!=null;
         }
         catch (Exception ignored){
-
         }
         return false;
     }
@@ -153,7 +151,6 @@ public class Game {
                     col = p.col;
                     System.out.print("Computer put a disk in column ");
                     System.out.println(col+1);
-                    //System.out.println();
                 } else {
                     System.out.print("Player " + playerNum(currentPlayer) + ", choose a column: ");
                     col = Integer.parseInt(terminalInput.nextLine()); // no exception handling...

@@ -18,7 +18,6 @@ public class EasyLevel implements IGameLevel{
                 board.alignDisc(position, XPLAYER);
                 if (board.winningDisk(position)) {
                     board.alignDisc(position, EMPTY); // reset
-
                     return position;
                 }
                 board.alignDisc(position, EMPTY); // reset
@@ -46,7 +45,6 @@ public class EasyLevel implements IGameLevel{
         if (counter==1){
             position.row = emptyrow;
             position.col = chosenrow;
-           // return chosenrow;
             return position;
         }
 
@@ -56,7 +54,7 @@ public class EasyLevel implements IGameLevel{
                 assert position != null;
                 position.row = -1;
                 position.col = i;
-                //return i;
+
                 return position;
             }
         return null;

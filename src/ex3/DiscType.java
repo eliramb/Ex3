@@ -1,16 +1,15 @@
 package ex3;
 
-
 import java.awt.*;
 
 public class DiscType {
     public char type;
     public Color color;
 
-    public DiscType(char type){//, Color color) {
+    public DiscType(char type){
         this.type = type;
-        //this.color = color;
     }
+
     public char getType(){
         return type;
     }
